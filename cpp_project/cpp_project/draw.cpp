@@ -2,20 +2,33 @@
 using namespace std;
 
 void player::draw_card(){
-	for (int i = 0; i < card_num; ++i) {
-		card1[i] = rand() % 4;
-		card2[i] = rand() % 13;
-		if (check[card1[i]][card2[i]] == 1)
-			i -= 1;
-		else {
-			check[card1[i]][card2[i]] = true;
-			drawn_card[card1[i]][card2[i]] = true;
-			card_show(card1[i], card2[i]);
-			Sleep(200);
-		}
+	//for (int i = 0; i < card_num; ++i) {
+	//	card1[i] = rand() % 4;
+	//	card2[i] = rand() % 13;
+	//	if (check[card1[i]][card2[i]] == 1)
+	//		i -= 1;
+	//	else {
+	//		check[card1[i]][card2[i]] = true;
+	//		drawn_card[card1[i]][card2[i]] = true;
+	//		card_show(card1[i], card2[i]);
+	//		Sleep(200);
+	//	}
+	//}
+	//cout << endl;
+	int j = 0;
+	for (int i = 0; i < card_num-1; ++i) {
+		card1[i] = j++;
+		card2[i] = 7;
+		drawn_card[card1[i]][card2[i]] = true;
 	}
-	cout << endl;
-}
+	card1[4] = rand() % 4;
+	card2[4] = rand() % 13;
+	drawn_card[card1[4]][card2[4]] = true;
+	for (int i = 0; i < card_num; ++i) {
+		card_show(card1[i], card2[i]);
+	}
+
+}	
 
 void player::card_show(int i, int j) {
 	cout << "|";
