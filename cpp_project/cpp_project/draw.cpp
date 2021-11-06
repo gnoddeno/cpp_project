@@ -15,15 +15,28 @@ void player::draw_card(){
 	//	}
 	//}
 	//cout << endl;
-	int j = 0;
-	for (int i = 0; i < card_num-1; ++i) {
+
+	/*int j = 0;	//풀하우스
+	for (int i = 0; i < card_num - 3; ++i) {
 		card1[i] = j++;
 		card2[i] = 7;
 		drawn_card[card1[i]][card2[i]] = true;
 	}
-	card1[4] = rand() % 4;
-	card2[4] = rand() % 13;
-	drawn_card[card1[4]][card2[4]] = true;
+	int a = 1;
+	for (int i = card_num - 3; i < card_num; ++i) {
+		card1[i] = a++;
+		card2[i] = 6;
+		drawn_card[card1[i]][card2[i]] = true;
+	}
+	*/
+
+	int j = 3;	//플래시
+	for (int i = 0; i < card_num; ++i) {
+		card1[i] = j;
+		card2[i] = rand() % 13;
+		drawn_card[card1[i]][card2[i]] = true;
+	}
+
 	for (int i = 0; i < card_num; ++i) {
 		card_show(card1[i], card2[i]);
 	}

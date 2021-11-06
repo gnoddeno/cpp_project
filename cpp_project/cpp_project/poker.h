@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <time.h>
 #include <windows.h>
+#include <algorithm>
 #define card_num 5
 
 using namespace std;
@@ -18,14 +19,18 @@ public:
 	friend bool royal_straight_flash(player one);
 	friend bool straight_flash(player one);
 	friend bool four_card(player one);
-	// friend bool full_house(player one);
-	// friend bool flash(player one);
+	friend bool full_house(player one);
+	friend bool flash(player one);
 	// friend bool mountain(player one);
 	// friend bool back_straight(player one);
 	// friend bool straight(player one);
 	// friend bool triple(player one);
 	// friend bool two_pair(player one);
 	// friend bool one_pair(player one);
+};
+class drawn_example:private player {
+public:
+	void draw_fullhouse();
 };
 void show_check();
 void explain_poker();
