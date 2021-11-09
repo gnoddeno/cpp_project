@@ -21,10 +21,10 @@ public:
 	friend bool four_card(player one);
 	friend bool full_house(player one);
 	friend bool flash(player one);
-	// friend bool mountain(player one);
-	// friend bool back_straight(player one);
-	// friend bool straight(player one);
-	// friend bool triple(player one);
+	friend bool mountain(player one);
+	friend bool back_straight(player one);
+	friend bool straight(player one);
+	//friend bool triple(player one);
 	// friend bool two_pair(player one);
 	// friend bool one_pair(player one);
 };

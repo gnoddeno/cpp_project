@@ -29,13 +29,39 @@ void player::draw_card(){
 		drawn_card[card1[i]][card2[i]] = true;
 	}
 	*/
-
+	/*
 	int j = 3;	//플래시
 	for (int i = 0; i < card_num; ++i) {
 		card1[i] = j;
 		card2[i] = rand() % 13;
 		drawn_card[card1[i]][card2[i]] = true;
 	}
+	*/
+	/*
+	int j = 9;	// 마운틴
+	for (int i = 0; i < card_num; ++i) {
+		card1[i] = rand() % 4;
+		card2[i] = (j++) % 13;
+		drawn_card[card1[i]][card2[i]] = true;
+	}
+	*/
+	/*
+	int j = 0;	// 백스트레이트
+	for (int i = 0; i < card_num; ++i) {
+		card1[i] = rand() % 4;
+		card2[i] = j++;
+		drawn_card[card1[i]][card2[i]] = true;
+	}
+	*/
+	/*
+	int j = rand() % 13;	//스트레이트
+	for (int i = 0; i < card_num; ++i) {
+		card1[i] = rand() % 4;
+		card2[i] = (j++) % 13;
+		drawn_card[card1[i]][card2[i]] = true;
+	}
+	*/
+
 
 	for (int i = 0; i < card_num; ++i) {
 		card_show(card1[i], card2[i]);

@@ -10,6 +10,12 @@ void detect_poker(player one) {
 		cout << endl << "full_house" << endl;
 	else if (flash(one))
 		cout << endl << "flash" << endl;
+	else if (mountain(one))
+		cout << endl << "mountain" << endl;
+	else if (back_straight(one))
+		cout << endl << "back_straight" << endl;
+	else if (straight(one))
+		cout << endl << "straight" << endl;
 	else
 		cout << "no_pair" << endl;
 }
@@ -94,9 +100,52 @@ bool flash(player one){
 	}
 	return false;
 }
-// bool mountain(player one){}
-// bool back_straight(player one){}
-// bool straight(player one){}
+bool mountain(player one){
+	bool detect[13] = { false, };
+	for (int i = 0; i < card_num; ++i) {
+		detect[one.card2[i]] = true;
+	}
+	int cnt = 0;
+	for (int i = 8; i < 13; ++i) {
+		if (detect[(i + 1) % 13] == true)
+			cnt++;
+	}
+	if (cnt == 5)
+		return true;
+	else
+		return false;
+}
+bool back_straight(player one){
+	bool detect[13] = { false, };
+	for (int i = 0; i < card_num; ++i) {
+		detect[one.card2[i]] = true;
+	}
+	int cnt = 0;
+	for (int i = 0; i < 5; ++i) {
+		if (detect[i] == true)
+			cnt++;
+	}
+	if (cnt == 5)
+		return true;
+	else
+		return false;
+}
+bool straight(player one){
+	bool detect[13] = { false, };
+	for (int i = 0; i < card_num; ++i) {
+		detect[one.card2[i]] = true;
+	}
+	for (int i = 0; i < 13; ++i) {
+		int cnt = 0;
+		for (int j = i; j < i + 5; ++j) {
+			if (detect[j % 13] == true)
+				cnt++;
+		}
+		if (cnt == 5)
+			return true;
+	}
+	return false;
+}
 // bool triple(player one){}
 // bool two_pair(player one){}
 // bool one_pair(player one){}
