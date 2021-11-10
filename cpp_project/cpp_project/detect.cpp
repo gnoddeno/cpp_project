@@ -1,21 +1,28 @@
 #include "poker.h"
 void detect_poker(player one) {
+	cout << one.get_name() << " >> ";
 	if (royal_straight_flash(one))
-		cout << endl << "royal_straight_flash " << endl;
+		cout << "royal_straight_flash " << endl;
 	else if (straight_flash(one))
-		cout << endl << "straight_flash" << endl;
+		cout << "straight_flash" << endl;
 	else if (four_card(one))
-		cout << endl << "four_card" << endl;
+		cout << "four_card" << endl;
 	else if (full_house(one))
-		cout << endl << "full_house" << endl;
+		cout << "full_house" << endl;
 	else if (flash(one))
-		cout << endl << "flash" << endl;
+		cout << "flash" << endl;
 	else if (mountain(one))
-		cout << endl << "mountain" << endl;
+		cout << "mountain" << endl;
 	else if (back_straight(one))
-		cout << endl << "back_straight" << endl;
+		cout << "back_straight" << endl;
 	else if (straight(one))
-		cout << endl << "straight" << endl;
+		cout << "straight" << endl;
+	else if (triple(one))
+		cout << "triple" << endl;
+	else if (num_pair(one) == 2)
+		cout << "two_pair" << endl;
+	else if (num_pair(one) == 1)
+		cout << "one_pair" << endl;
 	else
 		cout << "no_pair" << endl;
 }
@@ -82,8 +89,10 @@ bool full_house(player one){
 		if (detect[i] == 3) {
 			for (int j = 0; j < 13; ++j) {
 				if (j == i)continue;
-				else if (detect[j] == 2)
+				else if (detect[j] == 2){
+
 					return true;
+				}
 			}
 		}
 	}
@@ -146,6 +155,30 @@ bool straight(player one){
 	}
 	return false;
 }
-// bool triple(player one){}
-// bool two_pair(player one){}
-// bool one_pair(player one){}
+bool triple(player one){
+	char detect[13] = { 0, };
+	for (int i = 0; i < card_num; ++i) {
+		detect[one.card2[i]]++;
+	}
+	for (int i = 0; i < 13; ++i) {
+		if (detect[i]==3)
+			return true;
+	}
+	return false;
+}
+char num_pair(player one){
+	char detect[13] = { 0, };
+	for (int i = 0; i < card_num; ++i) {
+		detect[one.card2[i]]++;
+	}
+	int cnt = 0;
+	for (int i = 0; i < 13; ++i) {
+		if (detect[i] == 2)cnt++;
+	}
+	if (cnt == 1)
+		return 1;
+	else if (cnt >= 2)
+		return 2;
+	else
+		return false;
+}                                                     

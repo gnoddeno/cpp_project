@@ -10,11 +10,13 @@ int main() {
 	srand(time(NULL));
 	cout << "Poker" << endl;
 	
-	player p1;
+	player p1("player1");
+	player p2("player2");
 	//cout << "p1" << endl;
 	p1.draw_card();
-	p1.show_drawn_card();
+	p2.draw_card();
 	detect_poker(p1);
+	detect_poker(p2);
 	//player p1;
 	//cout << "p1" << endl;
 	//p1.draw_card();

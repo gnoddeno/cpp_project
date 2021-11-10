@@ -3,7 +3,7 @@
 #include <time.h>
 #include <windows.h>
 #include <algorithm>
-#define card_num 5
+#define card_num 7
 
 using namespace std;
 static bool check[4][13] = { 0, };
@@ -11,7 +11,10 @@ class player {
 	int card1[card_num];
 	int card2[card_num];
 	bool drawn_card[4][13] = { false };
+	string name;
 public:
+	player(string name) { this->name = name; }
+	string get_name() { return name; }
 	void draw_card();
 	void card_show(int i, int j);
 	void show_drawn_card();
@@ -24,13 +27,8 @@ public:
 	friend bool mountain(player one);
 	friend bool back_straight(player one);
 	friend bool straight(player one);
-	//friend bool triple(player one);
-	// friend bool two_pair(player one);
-	// friend bool one_pair(player one);
-};
-class drawn_example:private player {
-public:
-	void draw_fullhouse();
+	friend bool triple(player one);
+	friend char num_pair(player one);
 };
 void show_check();
 void explain_poker();
