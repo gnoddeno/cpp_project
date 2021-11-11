@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="2p_play.cpp" />
     <ClCompile Include="detect.cpp" />
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="explain.cpp" />

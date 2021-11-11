@@ -1,16 +1,18 @@
 #include "poker.h"
 void detect_poker(player one) {
 	cout << one.get_name() << " >> ";
-	if (royal_straight_flash(one))
-		cout << "royal_straight_flash " << endl;
-	else if (straight_flash(one))
-		cout << "straight_flash" << endl;
+	if (royal_straight_flush(one))
+		cout << "royal_straight_flush " << endl;
+	else if (back_straight_flush(one))
+		cout << "back_straight_flush" << endl;
+	else if (straight_flush(one))
+		cout << "straight_flush" << endl;
 	else if (four_card(one))
 		cout << "four_card" << endl;
 	else if (full_house(one))
 		cout << "full_house" << endl;
-	else if (flash(one))
-		cout << "flash" << endl;
+	else if (flush(one))
+		cout << "flush" << endl;
 	else if (mountain(one))
 		cout << "mountain" << endl;
 	else if (back_straight(one))
@@ -26,7 +28,7 @@ void detect_poker(player one) {
 	else
 		cout << "no_pair" << endl;
 }
-bool royal_straight_flash(player one) {
+bool royal_straight_flush(player one) {
 	int detect;
 	for (int i = 0; i < 4; ++i) {
 		detect = 0;
@@ -43,7 +45,19 @@ bool royal_straight_flash(player one) {
 	}
 	return false;
 }
-bool straight_flash(player one) {
+bool back_straight_flush(player one) {
+	for (int i = 0; i < 4; ++i) {
+		int cnt = 0;
+		for (int j = 0; j < 5; ++j) {
+			if (one.drawn_card[i][j] == 1)
+				cnt ++ ;
+		}
+		if (cnt == 5)
+			return true;
+	}
+	return false;
+}
+bool straight_flush(player one) {
 	int detect;
 	for (int i = 0; i < 4; ++i) {
 		for (int j = 0; j < 13; ++j) {
@@ -98,7 +112,7 @@ bool full_house(player one){
 	}
 	return false;
 }
-bool flash(player one){
+bool flush(player one){
 	short int detect[4] = { 0, };
 	for (int i = 0; i < card_num; ++i) {
 		detect[one.card1[i]]++;
