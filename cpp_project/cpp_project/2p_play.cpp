@@ -2,12 +2,15 @@
 using namespace std;
 void player2_play() {
 	player p1("player1");
-	//player p2("player2");
-	//player p3("player3");
-	p1.draw_card();
-	//p2.draw_card();
-	//p3.draw_card();
-	detect_poker(p1);
-	//detect_poker(p2);
-	//detect_poker(p3);
+	player p2("player2");
+	p1.draw();
+	p1.draw();
+	p1.draw();
+	p1.draw();
+	int n;
+	cout << "버릴 카드 숫자를 입력해주세요 : "; cin >> n;
+
+}
+void fall_card() {
+
 }

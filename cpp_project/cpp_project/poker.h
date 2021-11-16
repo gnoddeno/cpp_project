@@ -3,7 +3,7 @@
 #include <time.h>
 #include <windows.h>
 #include <algorithm>
-#define card_num 5	//총 카드가 7장
+#define card_num 7	//총 카드가 7장
 #define init_card_num 5	//게임 방식에 대해 test 중
 
 using namespace std;
@@ -38,7 +38,9 @@ public:
 	friend bool back_straight(player one);	//백 스트레이트 비교
 	friend bool straight(player one);	//스트레이트 비교
 	friend bool triple(player one);	//트리플 비교
-	friend char num_pair(player one);	//원페어, 투페어 비교
+	friend bool two_pair(player one);	//원페어, 투페어 비교
+	friend bool one_pair(player one);	//원페어, 투페어 비교
+	friend void fall_card(player one);
 };
 void player2_play();	//2인 플레이 구현중
 void show_check();	//디버그 함수

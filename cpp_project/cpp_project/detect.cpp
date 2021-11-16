@@ -21,9 +21,9 @@ void detect_poker(player one) {	//족보가 높은순으로 비교
 		cout << "straight" << endl;
 	else if (triple(one))
 		cout << "triple" << endl;
-	else if (num_pair(one) == 2)
+	else if (two_pair(one))
 		cout << "two_pair" << endl;
-	else if (num_pair(one) == 1)
+	else if (one_pair(one))
 		cout << "one_pair" << endl;
 	else	//아무 족보와도 같지 않으면 no_pair 출력
 		cout << "no_pair" << endl;
@@ -155,11 +155,18 @@ bool flush(player one){	//플러시
 }
 bool mountain(player one){	//마운틴
 	bool detect[13] = { false, };
-	detect_card card[5];
 	for (int i = 0; i < card_num; ++i) {
 		detect[one.card2[i]] = true;
 	}
-	int temp = 0;
+	int cnt = 0;
+	for (int i = 8; i < 13; ++i) {
+		if (detect[(i + 1) % 13] == true) {	//5장의 카드의 숫자가 모양에 상관없이 10,J,Q,K,A로 연속될 경우
+			cnt++;	//cnt++
+		}
+	}
+	if (cnt == 5) {	//마운틴 족보와 같으면
+		detect_card card[5];
+		int temp = 0;
 	for (int i = 8; i < 13; ++i) {
 		for (int j = 0; j < card_num; ++j) {
 			if (one.card2[j] == (i + 1) % 13) {
@@ -169,13 +176,6 @@ bool mountain(player one){	//마운틴
 		}
 		temp++;
 	}
-	int cnt = 0;
-	for (int i = 8; i < 13; ++i) {
-		if (detect[(i + 1) % 13] == true) {	//5장의 카드의 숫자가 모양에 상관없이 10,J,Q,K,A로 연속될 경우
-			cnt++;	//cnt++
-		}
-	}
-	if (cnt == 5) {	//마운틴 족보와 같으면
 		for (int i = 0; i < 5; ++i) {
 			one.card_show(card[i].card1, card[i].card2);
 		}
@@ -194,8 +194,23 @@ bool back_straight(player one){	//백 스트레이트
 		if (detect[i] == true)	//5장의 카드의 숫자가 모양에 상관없이 A,2,3,4,5로 연속될 경우
 			cnt++;	//cnt++
 	}
-	if (cnt == 5)	//백 스트레이트 족보와 같으면
-		return true;	//true 리턴
+	if (cnt == 5) {	//백 스트레이트 족보와 같으면
+		int temp = 0;
+		detect_card card[5];
+		for (int i = 0; i < 5; ++i) {
+			for (int j = 0; j < card_num; ++j) {
+				if (one.card2[j] == i) {
+					card[temp].card1 = one.card1[j];
+					card[temp].card2 = one.card2[j];
+				}
+			}
+			temp++;
+		}
+		for (int i = 0; i < 5; ++i) {
+			one.card_show(card[i].card1, card[i].card2);
+		}
+		return true;
+	}//true 리턴
 	else
 		return false;	//false 리턴
 }
@@ -206,12 +221,39 @@ bool straight(player one){	//스트레이트
 	}
 	for (int i = 0; i < 13; ++i) {
 		int cnt = 0;
+		int temp = 0;
 		for (int j = i; j < i + 5; ++j) {
-			if (detect[j % 13] == true)	//5장의 카드의 숫자가 무늬에 상관없이 연속될 경우
+			if (detect[j % 13] == true) {	//5장의 카드의 숫자가 무늬에 상관없이 연속될 경우
 				cnt++;	//cnt++
+			}
 		}
-		if (cnt == 5)	//족보가 스트레이트와 같으면
-			return true;	//true 리턴
+		if (cnt == 5) {	//족보가 스트레이트와 같으면
+			int temp;
+			int det;
+			detect_card card[5];
+			for (int i = 0; i < 13; ++i) {
+				temp = 0;
+				for (int j = i; j < i + 5; ++j) {
+					det = 0;
+					for (int k = 0; k < card_num; ++k) {
+						if (one.card2[k] == j % 13) {
+							card[temp].card1 = one.card1[k];
+							card[temp].card2 = one.card2[k];
+							det = 1;
+						}
+					}
+					if(det == 1)
+						temp++;
+					if (temp == 5) {
+						for (int k = 0; k < 5; ++k) {
+							one.card_show(card[k].card1, card[k].card2);
+						}
+						return true;	//true 리턴
+					}
+				}
+
+			}
+		}
 	}
 	return false;	//false 리턴
 }
@@ -221,24 +263,87 @@ bool triple(player one){	//트리플
 		detect[one.card2[i]]++;	//3장의 카드의 숫자가 같은 경우 (모양 상관 없음) detect++
 	}
 	for (int i = 0; i < 13; ++i) {
-		if (detect[i]==3)	//트리플 족보와 같으면
+		if (detect[i] == 3) {	//트리플 족보와 같으면
+			detect_card card[3];
+			int temp = 0;
+			while(temp != 3){
+				for (int j = 0; j < card_num; ++j) {
+					if (one.card2[j] == i) {
+						card[temp].card1 = one.card1[j];
+						card[temp++].card2 = one.card2[j];
+					}
+				}
+			}
+		for (int j = 0; j < 3; ++j) {
+			one.card_show(card[j].card1, card[j].card2);
+		}
 			return true;	//true 리턴
+		}
 	}
 	return false;	//같지않으면 false 리턴
 }
-char num_pair(player one){	//원페어, 투페어
+bool two_pair(player one){	//투페어
 	char detect[13] = { 0, };
+	int det[4] = { 20, };
 	for (int i = 0; i < card_num; ++i) {
 		detect[one.card2[i]]++;	//카드의 숫자에 맞는 배열에 +1을 해줌
 	}
 	int cnt = 0;
 	for (int i = 0; i < 13; ++i) {
-		if (detect[i] == 2)cnt++;	//페어가 발견되면 cnt++
+		if (detect[i] == 2) {
+			det[cnt++] = i;
+		}//페어가 발견되면 cnt++
 	}
-	if (cnt == 1)	//원페어일 경우
-		return 1;	//1 return
-	else if (cnt >= 2)	//투페어일 경우
-		return 2;	//2 return
-	else
-		return false;	//아무것도 없는 경우 false return
-}                                                     
+	detect_card card[4];
+	if (cnt >= 2) {	//투페어일 경우
+		int temp = 0;
+		for (int i = 0; i < card_num; ++i) {
+			if (one.card2[i] == det[0]) {
+				card[temp].card1 = one.card1[i];
+				card[temp].card2 = one.card2[i];
+				temp++;
+			}
+		}
+		for (int i = 0; i < card_num; ++i) {
+			if (one.card2[i] == det[1]) {
+				card[temp].card1 = one.card1[i];
+				card[temp].card2 = one.card2[i];
+				temp++;
+			}
+		}
+		for (int i = 0; i < temp; ++i) {
+			one.card_show(card[i].card1, card[i].card2);
+		}
+		return true;
+	}
+	return false;	//아무것도 없는 경우 false return
+}
+bool one_pair(player one) {	//투페어
+	char detect[13] = { 0, };
+	int det[4] = { 20, };
+	for (int i = 0; i < card_num; ++i) {
+		detect[one.card2[i]]++;	//카드의 숫자에 맞는 배열에 +1을 해줌
+	}
+	int cnt = 0;
+	for (int i = 0; i < 13; ++i) {
+		if (detect[i] == 2) {
+			det[cnt++] = i;
+		}//페어가 발견되면 cnt++
+	}
+	detect_card card[4];
+	if (cnt == 1) {	//원페어일 경우
+		int temp = 0;
+		for (int i = 0; i < card_num; ++i) {
+			if (one.card2[i] == det[0]) {
+				card[temp].card1 = one.card1[i];
+				card[temp].card2 = one.card2[i];
+				temp++;
+			}
+		}
+		for (int i = 0; i < temp; ++i) {
+			one.card_show(card[i].card1, card[i].card2);
+		}
+		return true;	//1 return
+	}
+	else return false;
+}
