@@ -2,36 +2,40 @@
 using namespace std;
 
 void player::draw() {
-	card1[curr_num] = rand() % 4;
-	card2[curr_num] = rand() % 13;
-	if (check[card1[curr_num]][card2[curr_num]] == true)
+	card1[curr_num] = rand() % 4;	//모양 지정
+	card2[curr_num] = rand() % 13;	//숫자 지정
+	if (check[card1[curr_num]][card2[curr_num]] == true)	//이미 뽑힌 카드이면 재귀
 		draw();
-	else {
-		check[card1[curr_num]][card2[curr_num]] = true;
-		drawn_card[card1[curr_num]][card2[curr_num]] = true;
-		card_show(card1[curr_num], card2[curr_num]);
-		curr_num++;
+	else {	//뽑힌 카드가 아니면
+		check[card1[curr_num]][card2[curr_num]] = true;	//카드가 뽑혔다고 저장
+		drawn_card[card1[curr_num]][card2[curr_num]] = true;	//뽑은 카드에 저장
+		card_show(card1[curr_num], card2[curr_num]); //뽑은 카드 출력
+		curr_num++;	//뽑은 카드 수 ++
 	}
 }
 void player::draw_card(){
+	/*
 	cout << name << " = ";
 	while (curr_num != card_num) {
+		Sleep(40);
 		draw();
-		Sleep(200);
 	}
 	
-
-	/*int j = 0;	//풀하우스
+	*/
+	/*
+	int j = 0;	//풀하우스
 	for (int i = 0; i < card_num - 3; ++i) {
 		card1[i] = j++;
 		card2[i] = 7;
 		drawn_card[card1[i]][card2[i]] = true;
+		card_show(card1[i], card2[i]);
 	}
 	int a = 1;
 	for (int i = card_num - 3; i < card_num; ++i) {
 		card1[i] = a++;
 		card2[i] = 6;
 		drawn_card[card1[i]][card2[i]] = true;
+		card_show(card1[i], card2[i]);
 	}
 	*/
 	/*
@@ -40,16 +44,18 @@ void player::draw_card(){
 		card1[i] = j;
 		card2[i] = rand() % 13;
 		drawn_card[card1[i]][card2[i]] = true;
+		card_show(card1[i], card2[i]);
 	}
 	*/
-	/*
+	
 	int j = 9;	// 마운틴
 	for (int i = 0; i < card_num; ++i) {
 		card1[i] = rand() % 4;
 		card2[i] = (j++) % 13;
 		drawn_card[card1[i]][card2[i]] = true;
+		card_show(card1[i], card2[i]);
 	}
-	*/
+	
 	/*
 	int j = 0;	// 백스트레이트
 	for (int i = 0; i < card_num; ++i) {
@@ -99,7 +105,7 @@ void player::draw_card(){
 	cout << endl;
 }	
 
-void player::card_show(int i, int j) {
+void player::card_show(int i, int j) {	//draw한 카드 출력
 	cout << "|";
 	if (i == 0)
 		cout << "♠";
