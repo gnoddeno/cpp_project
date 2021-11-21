@@ -1,25 +1,29 @@
 #include "poker.h"
 using namespace std;
 
-void player::draw() {
-	Sleep(200);
+void player::b_draw() {
+	//Sleep(sleep_time);
 	card1[curr_num] = rand() % 4;	//모양 지정
 	card2[curr_num] = rand() % 13;	//숫자 지정
 	if (check[card1[curr_num]][card2[curr_num]] == true)	//이미 뽑힌 카드이면 재귀
-		draw();
-	else {	//뽑힌 카드가 아니면
+		b_draw();
+	else {	//뽑힌 카드가 아니면 
 		check[card1[curr_num]][card2[curr_num]] = true;	//카드가 뽑혔다고 저장
 		drawn_card[card1[curr_num]][card2[curr_num]] = true;	//뽑은 카드에 저장
+		/*
+		cout << curr_num+1 << ".";
 		card_show(card1[curr_num], card2[curr_num]); //뽑은 카드 출력
+		cout << ", ";
+		*/
 		curr_num++;	//뽑은 카드 수 ++
 	}
 }
 void player::draw_card(){
 	
 	cout << name << " = ";
-	while (curr_num != card_num-3) {
+	while (curr_num != card_num) {
 		Sleep(200);
-		draw();
+		b_draw();
 	}
 	
 	
@@ -112,7 +116,15 @@ void player::draw_card(){
 	*/
 	cout << endl;
 }	
-
+void player::swap_card(int a, int b) {
+	int temp = 0;
+	temp = card1[a];
+	card1[a] = card1[b];
+	card1[b] = temp;
+	temp = card2[a];
+	card2[a] = card2[b];
+	card2[b] = temp;
+}
 void player::card_show(int i, int j) {	//draw한 카드 출력
 	cout << "|";
 	if (i == 0)
@@ -136,15 +148,13 @@ void player::card_show(int i, int j) {	//draw한 카드 출력
 	cout << "|";
 }
 void player::show_drawn_card() {
-	for (int i = 0; i < 4; ++i ){
-		for (int j = 0; j < 13; ++j) {
-			cout << drawn_card[i][j]<< ", ";
-		}
-		cout << endl;
+	for (int i = 0; i < curr_num; ++i) {
+		Sleep(sleep_time);
+		cout << i+1 << ".";
+		card_show(card1[i], card2[i]); //뽑은 카드 출력
+		cout << ", ";
 	}
 }
-
-
 void show_check() {
 	for (int k = 0; k < 4; ++k) {
 		for (int l = 0; l < 13; ++l) {

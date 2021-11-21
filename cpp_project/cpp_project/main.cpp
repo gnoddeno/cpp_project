@@ -5,7 +5,7 @@ using namespace std;
 int main() {
 	//explain_poker();
 	int n;
-	//cin >> n;
+	//cin >> n; 
 	system("cls");
 	srand(time(NULL));
 	cout << "Poker" << endl;

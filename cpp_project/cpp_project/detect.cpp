@@ -147,7 +147,7 @@ bool flush(player one){	//플러시
 			}
 			for (int k = 0; k < 5; ++k) {
 				one.card_show(card[k].card1, card[k].card2);
-			}
+			} 
 			return true;	//true 리턴
 		}
 	}
