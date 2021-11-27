@@ -1,5 +1,6 @@
 #include "poker.h"
 void detect_poker(player one) {	//족보가 높은순으로 비교
+	cout << endl;
 	cout << one.get_name() << " >> ";
 	if (royal_straight_flush(one))
 		cout << "royal_straight_flush " << endl;
@@ -50,7 +51,7 @@ bool back_straight_flush(player one) {	//백 스트레이트 플러시
 		int detect = 0;
 		for (int j = 0; j < 5; ++j) {
 			if (one.drawn_card[i][j] == 1)
-				detect ++ ;	//5장의 카드가 모두 같은 무늬이면서 A, 2, 3, 4, 5가 연달아 있는 경우 detect++
+				detect++;	//5장의 카드가 모두 같은 무늬이면서 A, 2, 3, 4, 5가 연달아 있는 경우 detect++
 		}
 		if (detect == 5)	//백 스트레이트 플러시 족보와 같으면
 			return true;	//true 리턴	
@@ -63,12 +64,12 @@ bool straight_flush(player one) {	//스트레이트 플러시
 		for (int j = 0; j < 13; ++j) {
 			detect = 0;
 			for (int k = j; k < j + 5; ++k) {
-				if (one.drawn_card[i][k%13] == 1)
+				if (one.drawn_card[i][k % 13] == 1)
 					detect++;	//5장의 카드가 모두 같은 무늬이면서 연속된 숫자로 되어 있는 경우 detect++
 			}
 			if (detect == 5) {	//스트레이트 플러시 족보와 같으면
 				for (int k = j; k < j + 5; ++k) {
-					one.card_show(i, k%13);
+					one.card_show(i, k % 13);
 				}
 				return true;	//true 리턴
 			}
@@ -76,7 +77,7 @@ bool straight_flush(player one) {	//스트레이트 플러시
 	}
 	return false;	//같지 않으면 false 리턴
 }
-bool four_card(player one){	//포카드
+bool four_card(player one) {	//포카드
 	int detect = 0;
 	for (int i = 0; i < 13; ++i) {
 		detect = 0;
@@ -93,9 +94,12 @@ bool four_card(player one){	//포카드
 	}
 	return false;	//같지 않으면 false 리턴
 }
-bool full_house(player one){	//풀하우스
+bool full_house(player one) {	//풀하우스
 	short int detect[13] = { 0, };
 	detect_card card[5];
+	for (int i = 0; i < 5; ++i) {
+		card[i].card1 = 0; card[i].card2 = 0;
+	}
 	int cnt = 0;
 	int temp;
 	for (int i = 0; i < card_num; ++i) {	//같은 숫자 3장과 같은 숫자 2장으로 되어 있는 경우
@@ -111,7 +115,7 @@ bool full_house(player one){	//풀하우스
 			}
 			for (int j = 0; j < 13; ++j) {
 				if (j == i)continue;
-				else if (detect[j] == 2){	//풀하우스 족보와 같으면
+				else if (detect[j] == 2) {	//풀하우스 족보와 같으면
 					for (int k = 0; k < 13; ++k) {
 						if (one.card2[k] == j) {
 							card[cnt].card1 = one.card1[k];
@@ -130,9 +134,12 @@ bool full_house(player one){	//풀하우스
 	}
 	return false;	//아니면 false 리턴
 }
-bool flush(player one){	//플러시
+bool flush(player one) {	//플러시
 	short int detect[4] = { 0, };
-	detect_card card[card_num];
+	detect_card card[5];
+	for (int i = 0; i < 5; ++i) {
+		card[i].card1 = 0; card[i].card2 = 0;
+	}
 	int cnt = 0;
 	for (int i = 0; i < card_num; ++i) {	//5장 카드 모양이 모두 같은 경우
 		detect[one.card1[i]]++;	//detect++
@@ -147,13 +154,13 @@ bool flush(player one){	//플러시
 			}
 			for (int k = 0; k < 5; ++k) {
 				one.card_show(card[k].card1, card[k].card2);
-			} 
+			}
 			return true;	//true 리턴
 		}
 	}
 	return false;	//아니면 false 리턴
 }
-bool mountain(player one){	//마운틴
+bool mountain(player one) {	//마운틴
 	bool detect[13] = { false, };
 	for (int i = 0; i < card_num; ++i) {
 		detect[one.card2[i]] = true;
@@ -166,16 +173,19 @@ bool mountain(player one){	//마운틴
 	}
 	if (cnt == 5) {	//마운틴 족보와 같으면
 		detect_card card[5];
-		int temp = 0;
-	for (int i = 8; i < 13; ++i) {
-		for (int j = 0; j < card_num; ++j) {
-			if (one.card2[j] == (i + 1) % 13) {
-				card[temp].card1 = one.card1[j];
-				card[temp].card2 = one.card2[j];
-			}
+		for (int i = 0; i < 5; ++i) {
+			card[i].card1 = 0; card[i].card2 = 0;
 		}
-		temp++;
-	}
+		int temp = 0;
+		for (int i = 8; i < 13; ++i) {
+			for (int j = 0; j < card_num; ++j) {
+				if (one.card2[j] == (i + 1) % 13) {
+					card[temp].card1 = one.card1[j];
+					card[temp].card2 = one.card2[j];
+				}
+			}
+			temp++;
+		}
 		for (int i = 0; i < 5; ++i) {
 			one.card_show(card[i].card1, card[i].card2);
 		}
@@ -184,7 +194,7 @@ bool mountain(player one){	//마운틴
 	else
 		return false;	//아니면 false 리턴
 }
-bool back_straight(player one){	//백 스트레이트
+bool back_straight(player one) {	//백 스트레이트
 	bool detect[13] = { false, };
 	for (int i = 0; i < card_num; ++i) {
 		detect[one.card2[i]] = true;
@@ -214,7 +224,7 @@ bool back_straight(player one){	//백 스트레이트
 	else
 		return false;	//false 리턴
 }
-bool straight(player one){	//스트레이트
+bool straight(player one) {	//스트레이트
 	bool detect[13] = { false, };
 	for (int i = 0; i < card_num; ++i) {
 		detect[one.card2[i]] = true;
@@ -242,7 +252,7 @@ bool straight(player one){	//스트레이트
 							det = 1;
 						}
 					}
-					if(det == 1)
+					if (det == 1)
 						temp++;
 					if (temp == 5) {
 						for (int k = 0; k < 5; ++k) {
@@ -257,7 +267,7 @@ bool straight(player one){	//스트레이트
 	}
 	return false;	//false 리턴
 }
-bool triple(player one){	//트리플
+bool triple(player one) {	//트리플
 	char detect[13] = { 0, };
 	for (int i = 0; i < card_num; ++i) {
 		detect[one.card2[i]]++;	//3장의 카드의 숫자가 같은 경우 (모양 상관 없음) detect++
@@ -266,7 +276,7 @@ bool triple(player one){	//트리플
 		if (detect[i] == 3) {	//트리플 족보와 같으면
 			detect_card card[3];
 			int temp = 0;
-			while(temp != 3){
+			while (temp != 3) {
 				for (int j = 0; j < card_num; ++j) {
 					if (one.card2[j] == i) {
 						card[temp].card1 = one.card1[j];
@@ -274,15 +284,15 @@ bool triple(player one){	//트리플
 					}
 				}
 			}
-		for (int j = 0; j < 3; ++j) {
-			one.card_show(card[j].card1, card[j].card2);
-		}
+			for (int j = 0; j < 3; ++j) {
+				one.card_show(card[j].card1, card[j].card2);
+			}
 			return true;	//true 리턴
 		}
 	}
 	return false;	//같지않으면 false 리턴
 }
-bool two_pair(player one){	//투페어
+bool two_pair(player one) {	//투페어
 	char detect[13] = { 0, };
 	int det[4] = { 20, };
 	for (int i = 0; i < card_num; ++i) {

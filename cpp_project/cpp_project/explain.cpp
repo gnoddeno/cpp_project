@@ -66,3 +66,10 @@ void explain_poker() {
 	cout << " - 이 외 아무 족보에도 속하지 않는 것을 노페어 라고 한다." << endl;
 }
 //https://lovem74.tistory.com/33
+void poker_rank() {
+	cout << "족보 순서" << endl;
+	cout << "royal_straight_flush > back_straight_flush > straight_flush" << endl;
+	cout << "> four_card > full_house > flush > mountain > back_straight > straight" << endl;
+	cout << "> triple >two_pair >one_pair" << endl;
+	cout << "같은 족보일 경우♠-스페이드, ◆-다이아몬드, ♥-하트, ♣-클로버 순으로 승리가 결정" << endl;
+}

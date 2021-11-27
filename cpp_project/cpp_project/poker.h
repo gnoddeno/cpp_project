@@ -8,28 +8,33 @@
 #define sleep_time 200 //sleep 시간
 
 using namespace std;
-static bool check[4][13] = { false, };	//처음 아무 카드도 뽑히지 않았으므로 0으로 초기화
+//static bool check[4][13] = { false, };	//처음 아무 카드도 뽑히지 않았으므로 0으로 초기화
 typedef struct detect_card {
 	short	int card1;
 	short	int card2;
-}detect_card; 
+}detect_card;
 
 class player {
 	int card1[card_num];	//카드의 모양
 	int card2[card_num];	//카드의 숫자
-	bool drawn_card[4][13] = { false };	//뽑은 카드 (처음엔 아무것도 뽑지 않았기 때문에 0으로 초기화)
+	int drawn_card[4][13] = { 0, };	//뽑은 카드 (처음엔 아무것도 뽑지 않았기 때문에 0으로 초기화)
 	string name;
 	int curr_num = 0;	//카드의 개수
+	int money;
 public:
-	player(string name) { this->name = name; }	//플레이어의 이름 저장
+	player(string name, int money = 50000) { this->name = name; this->money = money; }	//플레이어의 이름 저장
 	string get_name() { return name; }	//플레이어의 이름 return
-	void draw_card();	//카드 뽑기
-	void b_draw();	//가장 기본이 되는 draw
-	void a_draw();
+	int get_curr() { return curr_num; }
+	int get_check(int i, int j) { return drawn_card[i][j]; }
+	void draw_card(player one, player two);	//카드 뽑기
+	void draw(player one, player two);	//가장 기본이 되는 draw
 	void card_show(int i, int j);	//뽑은 카드를 show
-	void show_drawn_card();	//디버그 코드
+	void show_drawn_card();
+	void show_player_card();
 	void swap_card(int a, int b);
 	void fall_card();
+	void choice_see_card();
+	void show_debug_card();
 	friend void detect_poker(player one);	//카드의 족보를 비교하는 함수이다.
 	friend bool royal_straight_flush(player one);	//로얄 스트레이트 플러시 비교
 	friend bool back_straight_flush(player one);	//백 스트레이트 플러시 비교
@@ -45,6 +50,7 @@ public:
 	friend bool one_pair(player one);	//원페어, 투페어 비교
 };
 void player2_play();	//2인 플레이 구현중
-void show_check();	//디버그 함수
 void explain_poker();	//포커 내용 소개
+void poker_rank();
+bool comp_card(player& p1, player& p2);
 
