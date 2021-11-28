@@ -21,8 +21,17 @@ int main() {
 		else if (a == 'D' || a == 'd') {
 			player p1("pike");
 			player p2("ash");
-			p1.draw_card(p1, p2);
-			p2.draw_card(p2, p1);
+			int check[4][13] = { 0, };
+			for (int i = 0; i < 3; ++i) {
+				p1.draw(p1, p2, check);
+			}
+			for (int i = 0; i < 3; ++i) {
+				p2.draw(p2, p1, check);
+			}
+			for (int i = 0; i < 4; ++i) {
+				p1.draw(p1, p2, check);
+				p2.draw(p2, p1, check);
+			}
 			p1.show_drawn_card();
 			p2.show_drawn_card();
 			detect_poker(p1);

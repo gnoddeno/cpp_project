@@ -24,17 +24,22 @@ class player {
 public:
 	player(string name, int money = 50000) { this->name = name; this->money = money; }	//플레이어의 이름 저장
 	string get_name() { return name; }	//플레이어의 이름 return
-	int get_curr() { return curr_num; }
-	int get_check(int i, int j) { return drawn_card[i][j]; }
+	int get_curr_num() { return curr_num; }
+	int get_card1(int i) { return card1[i]; }
+	int get_card2(int i) { return card2[i]; }
+	int get_money() { return money; }
+	int betting(int standard);
+	void bet_end(int total);
 	void draw_card(player one, player two);	//카드 뽑기
-	void draw(player one, player two);	//가장 기본이 되는 draw
+	void draw(player one, player two, int check[4][13]);	//가장 기본이 되는 draw
 	void card_show(int i, int j);	//뽑은 카드를 show
 	void show_drawn_card();
 	void show_player_card();
 	void swap_card(int a, int b);
 	void fall_card();
 	void choice_see_card();
-	void show_debug_card();
+	void show_debug_card();//debug
+	void reset_game();	// 초기화하는 코드
 	friend void detect_poker(player one);	//카드의 족보를 비교하는 함수이다.
 	friend bool royal_straight_flush(player one);	//로얄 스트레이트 플러시 비교
 	friend bool back_straight_flush(player one);	//백 스트레이트 플러시 비교
@@ -52,5 +57,6 @@ public:
 void player2_play();	//2인 플레이 구현중
 void explain_poker();	//포커 내용 소개
 void poker_rank();
-bool comp_card(player& p1, player& p2);
+bool comp_card(int a, int b, int check[4][13]);
+void turn_end();
 

@@ -136,8 +136,8 @@ bool full_house(player one) {	//풀하우스
 }
 bool flush(player one) {	//플러시
 	short int detect[4] = { 0, };
-	detect_card card[5];
-	for (int i = 0; i < 5; ++i) {
+	detect_card card[7];
+	for (int i = 0; i < 7; ++i) {
 		card[i].card1 = 0; card[i].card2 = 0;
 	}
 	int cnt = 0;
