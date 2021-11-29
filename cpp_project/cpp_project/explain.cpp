@@ -1,5 +1,8 @@
 #include "poker.h"
 void explain_poker() {
+	system("cls");
+	cout << " SEVEN POKER" << endl;
+	Sleep(1000);
 	cout << " > 조커 카드를 제외한 52장의 카드를 잘 섞은 후 모든 플레이어는 4장의 카드를 받는다." << endl;
 	cout << " > 4장의 카드 중 가장 필요없다고 생각되는 한 장의 카드를 버린다." << endl;
 	cout << " > 자신이 가지고있는 카드 중 한 장을 오픈하고, 카드를 한장씩 받는데 이 카드는 오픈한다." << endl;
